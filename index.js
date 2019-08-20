@@ -16,7 +16,7 @@ const Movies = Models.Movie;
 const Users = Models.User;
 
 
-mongoose.connect('mongodb://localhost:27017/myFlixDBs', {useNewUrlParser: true});
+mongoose.connect('mongodb+srv://myFlixDBadmin:Newthings4eva@myflixdb-bmqp1.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
 
 
 
