@@ -1,5 +1,5 @@
 {
-  "name": "movie_api",
+  "name": "movie_api-master",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JLewis444/movie_api.git"
+    "url": "git+https://github.com/JLewis444/movie_api-master.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/JLewis444/movie_api/issues"
+    "url": "https://github.com/JLewis444/movie_api-master/issues"
   },
-  "homepage": "https://github.com/JLewis444/movie_api#readme",
+  "homepage": "https://github.com/JLewis444/movie_api-master#readme",
   "dependencies": {
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
