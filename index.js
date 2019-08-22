@@ -7,7 +7,7 @@ const Models = require('./models.js');
 const passport = require('passport');
 require('./passport');
 const cors = require('cors');
-const validator = require('express-validator');
+const {check, validationResult } = require('express-validator');
 
 
 
@@ -30,7 +30,7 @@ app.use(express.static('public'));
 
 app.use(cors());
 
-app.use(validator());
+//app.use(validator());
 
 app.use(bodyParser.json());
 
@@ -41,6 +41,7 @@ var auth = require('./auth');
 // GET requests
 app.get('/', function(req, res) {
   res.redirect('public/documentation.html')
+  
 });
 
 app.post('/login', (req, res) => {
@@ -87,20 +88,23 @@ app.get('/users', function(req, res) {
 });
 
 // adding new user data to the list of users
-app.post('/users', function(req, res) {
+app.post('/users',[ 
   //Validation logic here for request
-  req.checkBody('Username', 'Username is required').notEmpty();
-  req.checkBody('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric()
-  req.checkBody('Password', 'Password is required').notEmpty();
-  req.checkBody('Email', 'Email is required').notEmpty();
-  req.checkBody('Email', 'Email does not appear to be valid').isEmail();
+  check('Username', 'Not Valid').isLength({ min: 5 }),
+  check('Username').isAlphanumeric(),
+  check('Password').exists(),
+  check('Email').exists(),
+  check('Email').isEmail(),
+],function(req, res) {
 
   // check the validation object for errors
-  var errors = req.validationErrors();
-
-  if (errors) {
-    return res.status(422).json({ errors: errors });
+  var errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
   }
+
+
+ 
 
   var hashedPassword = Users.hashPassword(req.body.Password);
 Users.findOne({ Username : req.body.Username })
@@ -197,7 +201,8 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something went wrong!');
 });
 
-var port = process.env.PORT || 3000;
-app.listen(port, "0.0.0.0", () => {
-  console.log('Listening on Port 3000');
-});
+var port = process.env.PORT || 3001;
+//app.listen(port, "0.0.0.0", () => {
+  //console.log('Listening on Port 3000');
+//});
+app.listen(port);
