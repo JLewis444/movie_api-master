@@ -81,7 +81,7 @@ app.get('/movies/:title', passport.authenticate('jwt', { session: false }), (req
     .then(movie => {
       // Return movie as JSON only if found else return Not Found.
       if (!movie) return res.status(404).send(`${req.params.title} not found`);
-      res.status(201).json(movie);
+      res.status(200).json(movie);
     })
     .catch(err => res.status(500).send(`Error: ${err}`)); // Simple error handling
 });
@@ -93,7 +93,7 @@ app.get('/genres/:name', passport.authenticate('jwt', { session: false }), (req,
     .then(movie => {
       // Return genre details only if found else return Not Found.
       if (!movie) return res.status(404).send(`${req.params.name} not found`);
-      res.status(201).json(movie.genre);
+      res.status(200).json(movie.genre);
     })
     .catch(err => res.status(500).send(`Error: ${err}`)); // Simple error handling
 });
@@ -105,7 +105,7 @@ app.get('/directors/:name', passport.authenticate('jwt', { session: false }), (r
     .then(movie => {
       // Return director details only if found else return Not Found.
       if (!movie) return res.status(404).send(`${req.params.name} not found`);
-      res.status(201).json(movie.director);
+      res.status(200).json(movie.director);
     })
     .catch(err => res.status(500).send(`Error: ${err}`)); // Simple error handling
 });
@@ -228,7 +228,7 @@ function(err, updatedUser) {
 });
 
 // Delete User Asscociated Movie
-app.delete('/users/:username/movies/:movieid', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.delete('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate(
     { username: req.params.username },
     { $pull: { favouriteMovies: req.params.movieid } },
