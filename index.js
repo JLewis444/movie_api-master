@@ -5,7 +5,7 @@ const uuid = require('uuid');
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 const passport = require('passport');
-require('./passport');
+require('./passport.js');
 const cors = require('cors');
 const {check, validationResult } = require('express-validator');
 const path = require('path');
@@ -74,6 +74,41 @@ app.get('/movies', passport.authenticate('jwt', { session: false}), function(req
  });
 });
 
+
+// GET Movie by Title
+app.get('/movies/:title', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Movies.findOne({ title: req.params.title })
+    .then(movie => {
+      // Return movie as JSON only if found else return Not Found.
+      if (!movie) return res.status(404).send(`${req.params.title} not found`);
+      res.status(201).json(movie);
+    })
+    .catch(err => res.status(500).send(`Error: ${err}`)); // Simple error handling
+});
+
+
+// Get Details of Genre
+app.get('/genres/:name', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Movies.findOne({ 'genre.name': req.params.name })
+    .then(movie => {
+      // Return genre details only if found else return Not Found.
+      if (!movie) return res.status(404).send(`${req.params.name} not found`);
+      res.status(201).json(movie.genre);
+    })
+    .catch(err => res.status(500).send(`Error: ${err}`)); // Simple error handling
+});
+
+
+// Get List of Movies by Director Name
+app.get('/directors/:name', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Movies.findOne({ 'director.name': req.params.name })
+    .then(movie => {
+      // Return director details only if found else return Not Found.
+      if (!movie) return res.status(404).send(`${req.params.name} not found`);
+      res.status(201).json(movie.director);
+    })
+    .catch(err => res.status(500).send(`Error: ${err}`)); // Simple error handling
+});
 
 // get the list of all users
 app.get('/users', function(req, res) {
@@ -190,6 +225,17 @@ function(err, updatedUser) {
     res.json(updatedUser)
   }
 })
+});
+
+// Delete User Asscociated Movie
+app.delete('/users/:username/movies/:movieid', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Users.findOneAndUpdate(
+    { username: req.params.username },
+    { $pull: { favouriteMovies: req.params.movieid } },
+    { new: true } // Make sure updated document is returned
+  )
+    .then(modifiedUser => res.status(201).json(modifiedUser)) // Return modified user as JSON
+    .catch(err => res.status(500).send(`Error: ${err}`)); // Simple error handling
 });
 
 // learning
