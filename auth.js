@@ -1,7 +1,7 @@
-var jwtSecret = 'your_jwt_secret';
+var jwtSecret = 'rangerover';
 var jwt = require('jsonwebtoken');
 const passport = require('passport');
-require('./passport');
+require('./passport.js');
 
 function generateJWTToken(user) {
   return jwt.sign(user, jwtSecret, {
@@ -11,23 +11,22 @@ function generateJWTToken(user) {
   });
 }
 
-module.exports = generateJWTToken
-// module.exports = (router) => {
-//   router.post('/login', (req, res) => {
-//     passport.authenticate('local', { session : false}, (error, user, info) => {
-//       if (error || !user) {
-//         return res.status(400).json({
-//           message: 'Something is not right',
-//           user: user
-//         });
-//       }
-//       req.login(user, { session: false }, (error) => {
-//         if (error) {
-//           res.send(error);
-//         }
-//         var token = generateJWTToken(user.toJSON());
-//         return res.json({ user, token });
-//       });
-//     })(req, res);
-//   });
-// }
+module.exports = router => {
+  router.post('/login', (req, res) => {
+    // Use LocalStrategy to check if user in db
+    passport.authenticate('local', { session: false }, (err, user, info) => {
+      if (err || !user) {
+        return res.status(400).json({
+          message: `Something is not right: ${info.message}`,
+          user,
+        });
+      }
+      // Generate JWT token for client
+      req.login(user, { session: false }, err => {
+        if (err) res.send(err);
+        const token = generateJWTToken(user.toJSON());
+        return res.json({ user, token });
+      });
+    })(req, res);
+  });
+};
