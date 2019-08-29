@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const cors = require('cors');
-const validator = require('express-validator');
+const { check, validationResult } = require('express-validator');
 const path = require('path');
 const Models = require('./models.js');
 
@@ -116,17 +116,22 @@ app.get('/directors/:name', passport.authenticate('jwt', { session: false }), (r
 });
 
 // Add New User
-app.post('/users', (req, res) => {
+app.post('/users', [
   // Data validation
-  req.checkBody('username', 'Username is required').notEmpty();
-  req.checkBody('username', 'Username must only contain alphanumeric charachters').isAlphanumeric();
-  req.checkBody('password', 'Password is required').notEmpty();
-  req.checkBody('email', 'Email is required').notEmpty();
-  req.checkBody('email', 'Email does not appear to be valid').isEmail();
-  // Check validation object for errors
-  const errors = req.validationErrors();
-  if (errors) return res.status(422).json({ errors });
+  check('username', 'Username is required').not().isEmpty(),
+  check('username', 'Username must only contain alphanumeric charachters').isAlphanumeric(),
+  check('password', 'Password is required').not().isEmpty(),
+  check('email', 'Email is required').not().isEmpty(),
+  check('email', 'Email does not appear to be valid').isEmail()
+], (req, res) => {
 
+  // check the validation object for errors
+  var errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+  
   const hashedPassword = Users.hashPassword(req.body.password);
   Users.findOne({ username: req.body.username })
     .then(user => {
