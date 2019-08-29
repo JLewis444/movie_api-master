@@ -35,7 +35,7 @@ app.use(bodyParser.json()); // Use body-parser middleware
 
 app.use(cors()); // Use CORS - All domains
 
-app.use(validator()); // Use server-side data validation
+//app.use(validator()); // Use server-side data validation
 
 var auth = require('./auth');
 // console.log("auth: ", auth)
