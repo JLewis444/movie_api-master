@@ -54,7 +54,7 @@ app.get('/', function(req, res) {
   
 });
 
-
+app.post('/login', auth )
 // get the list of data containing all Movies
 app.get('/movies', passport.authenticate('jwt', { session: false}), function(req, res) {
  Movies.find()
@@ -213,7 +213,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 app.listen(port, '0.0.0.0', () => {
   console.log('Listening on port 3000');
 });

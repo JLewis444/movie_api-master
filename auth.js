@@ -11,8 +11,7 @@ function generateJWTToken(user) {
   });
 }
 
-module.exports = router => {
-  router.post('/login', (req, res) => {
+module.exports =  (req, res) => {
     // Use LocalStrategy to check if user in db
     passport.authenticate('local', { session: false }, (err, user, info) => {
       if (err || !user) {
@@ -28,5 +27,5 @@ module.exports = router => {
         return res.json({ user, token });
       });
     })(req, res);
-  });
+  
 };
