@@ -37,7 +37,7 @@ app.use(cors()); // Use CORS - All domains
 
 //app.use(validator()); // Use server-side data validation
 
-var auth = require('./auth');
+var auth = require('./auth')(app);
 // console.log("auth: ", auth)
 // console.log("auth1: ", auth(app))
 
@@ -54,17 +54,10 @@ app.get('/', function(req, res) {
   
 });
 
-app.post('/login', auth )
-// get the list of data containing all Movies
-app.get('/movies', passport.authenticate('jwt', { session: false}), function(req, res) {
- Movies.find()
- .then(function(movies) {
-   res.status(200).json(movies);
- }).catch(function(error) {
-   console.error(error);
-   res.status(500).send("Error: " + error);
- });
-});
+
+
+
+
 
 // API Endpoint Routes
 
@@ -95,22 +88,35 @@ app.get('/movies/:title', passport.authenticate('jwt', { session: false }), (req
 
 // Get Details of Genre
 app.get('/genres/:name', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Movies.findOne({ 'genre.name': req.params.name })
+  Movies.findOne({ 'Genre.Name': req.params.name })
     .then(movie => {
       // Return genre details only if found else return Not Found.
       if (!movie) return res.status(404).send(`${req.params.name} not found`);
-      res.status(201).json(movie.genre);
+      res.status(201).json(movie.Genre);
     })
     .catch(err => res.status(500).send(`Error: ${err}`)); // Simple error handling
 });
 
+
+// get the list of data containing all Movies
+app.get('/directors', passport.authenticate('jwt', { session: false}), function(req, res) {
+  Directors.find()
+  .then(function(movies) {
+    res.status(200).json(movies);
+  }).catch(function(error) {
+    console.error(error);
+    res.status(500).send("Error: " + error);
+  });
+ });
 // Get List of Movies by Director Name
 app.get('/directors/:name', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Movies.findOne({ 'director.name': req.params.name })
+  console.log(req.params.name);
+  Movies.findOne({ 'Director.Name': req.params.name })
     .then(movie => {
       // Return director details only if found else return Not Found.
+      console.log(movie);
       if (!movie) return res.status(404).send(`${req.params.name} not found`);
-      res.status(201).json(movie.director);
+      res.status(201).json(movie.Director);
     })
     .catch(err => res.status(500).send(`Error: ${err}`)); // Simple error handling
 });
