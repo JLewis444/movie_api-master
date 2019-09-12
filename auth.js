@@ -11,11 +11,13 @@ function generateJWTToken(user) {
   });
 }
 
-module.exports = router => {
-  router.post('/login', (req, res) => {
+module.exports = (router) => {
+router.post('/login', (req, res) => {
     // Use LocalStrategy to check if user in db
     passport.authenticate('local', { session: false }, (err, user, info) => {
+      console.log(err)
       if (err || !user) {
+        console.log(err)
         return res.status(400).json({
           message: `Something is not right: ${info.message}`,
           user,
@@ -24,6 +26,10 @@ module.exports = router => {
       // Generate JWT token for client
       req.login(user, { session: false }, err => {
         if (err) res.send(err);
+        console.log(user);
+        user.Password = ''
+        user.Email = ''
+        console.log(user);
         const token = generateJWTToken(user.toJSON());
         return res.json({ user, token });
       });
