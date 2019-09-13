@@ -1,5 +1,9 @@
 import React from 'react';
 
+import Button from 'react-bootstrap/Button';
+
+import './movie-view.scss';
+
 export class MovieView extends React.Component {
     constructor() {
         super();
@@ -31,7 +35,7 @@ export class MovieView extends React.Component {
                 <div className="label">Director</div>
                 <div className="value">{movie.Director.Name}</div>
             </div> 
-              <button className="back-button" onClick={() => window.open('/', '_self')} >Back</button>
+              <Button className="view-btn" variant="primary" type="button" onClick={() => window.open('/', '_self')} >Back</Button>
               
            </div>
         );
