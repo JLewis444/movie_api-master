@@ -13,12 +13,12 @@ export class MainView extends React.Component {
         super();
 
         this.state = {
-            movies: null,
+            movies: [],
             selectedMovie: null
         };
     }
     componentDidMount() {
-        axios.get('<my-api-endpoint/movies>')
+        axios.get('https://lewis-myflix.herokuapp.com/movies')
         .then(response => {
             // Assign the result to the state
             this.setState({
