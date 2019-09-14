@@ -62,7 +62,7 @@ app.get('/', function(req, res) {
 // API Endpoint Routes
 
 // GET all Movies Route
-app.get('/movies', (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find()
     .then(allMovies => res.status(201).json(allMovies)) // Return all movies as JSON
     .catch(err => res.status(500).send(`Error: ${err}`)); // Simple error handling
