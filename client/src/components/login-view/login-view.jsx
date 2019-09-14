@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 
 import './login-view.scss';
 
@@ -49,9 +49,6 @@ export function LoginView(props) {
       <p>Not registered???</p>
       <p>
         Have Fun
-        <Link to={'/register'}>
-          <span> HERE</span>
-        </Link>
       </p>
     </Form>
     );

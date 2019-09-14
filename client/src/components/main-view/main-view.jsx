@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 
 import './main-view.scss';
 
@@ -51,7 +51,7 @@ export class MainView extends React.Component {
     
 
     render() {
-        // If the state is not initialized, this will throw on runtime before the data is initially loaded 
+       //  If the state is not initialized, this will throw on runtime before the data is initially loaded 
         const { movies, selectedMovie, user } =  this.state;
 
         if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
@@ -61,12 +61,12 @@ export class MainView extends React.Component {
 
         return (
             <div className="main-view">
-              {selectedMovie
+              { selectedMovie
                  ? <MovieView movie={selectedMovie}/>
-                 :  movies.map(movie => (
+                :  movies.map(movie => (
                  <MovieCard key={movie._id} movie={movie} onClick={movie => this.onMovieClick(movie)}/>
-             ))
-             }   
+                )) }
+                
             </div>
         );
     }
