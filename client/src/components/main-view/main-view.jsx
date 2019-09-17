@@ -13,6 +13,7 @@ import { RegistrationView } from '../registration-view/registration-view';
 import { ProfileView } from '../profile-view/profile-view';
 import DirectorView from '../director-view/director-view';
 import GenreView from '../genre-view/genre-view';
+import MovieList from '../movie-list/movie-list';
 
 
 
@@ -33,8 +34,8 @@ export class MainView extends React.Component {
             headers: { Authorization: `Bearer ${token}`}
         })
         .then(response => {
-            this.props.setMovies(response.data);
-            localStorage.setItem('movies', JSON.stringify(response.data));
+            this.setState(response.data);
+            localStorage.setItem('movies',(response.data));
             })
         .catch(function (error) {
             console.log(error);
@@ -114,11 +115,16 @@ export class MainView extends React.Component {
         return (
             <Router>
                 <div className="main-view">
-                    <Route exact path="/" render={() => { 
-                      if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;  
-                      movies.map(m => <MovieCard key={m._id} movie={m}/>)
-                    }
+                
+               <Route exact path="/" render={() =>  (!user) ? (<LoginView onLoggedIn={user => this.onLoggedIn(user)} /> ):
+                        (<MovieList movies={localStorage.getItem('movies')}/> )
                     }/>
+                    
+                    {/* <Route exact path="/" render={() => {  */}
+                      {/* if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;  
+                      movies.map(m => <MovieCard key={m._id} movie={m}/>)
+                    } */}
+                    {/* }/> */}
                     <Route path="/register" render={() => <RegistrationView />} />
                     <Route path="/movies/:movieId" render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>}/>
                     <Route exact path="/genres/:name" render={({ match }) => <GenreView genreName={match.params.name}/>}/>
