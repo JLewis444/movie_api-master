@@ -135,4 +135,4 @@ export class MainView extends React.Component {
     }
 }
 
-export default connect(null, {setMovies, setLoggedInUser} )(MainView);
+export default MainView;

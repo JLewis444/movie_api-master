@@ -26,5 +26,5 @@ function GenreView(props) {
     );
   }
   
-  export default connect(({movies}) => ({movies}))(GenreView);
+  export default GenreView;
   

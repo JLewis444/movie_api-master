@@ -14,6 +14,7 @@ function generateJWTToken(user) {
 module.exports = (router) => {
 router.post('/login', (req, res) => {
     // Use LocalStrategy to check if user in db
+    console.log(req.body);
     passport.authenticate('local', { session: false }, (err, user, info) => {
       console.log(err)
       if (err || !user) {

@@ -33,4 +33,4 @@ function DirectorView(props) {
     );
   }
   
-  export default connect(({movies}) => ({movies}))(DirectorView);
+  export default DirectorView;
