@@ -1,0 +1,7 @@
+{"_id":{"$oid":"5d4d659ca8783d03313e9fdd"},"Name":"Christoper Nolan","Bio":" ","Birth":{"$date":"1970-01-01T00:00:00.000Z"},"Death":" "}
+{"_id":{"$oid":"5d4d6637a8783d03313e9fde"},"Name":"Steven Spielberg","Bio":" ","Birth":" ","Death":" "}
+{"_id":{"$oid":"5d4d670ca8783d03313e9fdf"},"Name":"Ridley Scott","Bio":" ","Birth":" ","Death":" "}
+{"_id":{"$oid":"5d4d688ba8783d03313e9fe0"},"Name":"Alex Proyas","Bio":" ","Birth":" ","Death":" "}
+{"_id":{"$oid":"5d4d6933a8783d03313e9fe1"},"Name":"Mel Brooks","Bio":" ","Birth":" ","Death":" "}
+{"_id":{"$oid":"5d4d6a60a8783d03313e9fe2"},"Name":"Stanley Kubrick","Bio":" ","Birth":" ","Death":" "}
+{"_id":{"$oid":"5d4d6b37a8783d03313e9fe3"},"Name":"Andrew Niccol","Bio":" ","Birth":" ","Death":" "}

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>myFlix - APIs Documentation</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <h1>myFlix Documentation</h1>
+  <p>
+    myFlix is a server side Node.js component of a "movies" web application. The web application provides users with access to information about different movies, directors, and genres. Users are able to sign up, update their personal information, and create a list of their favorite movies.
+  </p>
+  <div>
+    <table>
+      
+      <thead>
+        <tr>
+            <th>Business Logic</th>
+            <th>URL</th>
+            <th>HTTP Method</th>
+            <th>Request body data format</th>
+            <th>Response body data format</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Return a list of ALL movies to the user</td>
+            <td>/movies</td>
+            <td>GET</td>
+            <td>None</td>
+            <td>JSON object holding data about all of the movies</td> 
+        </tr>
+        
+        <tr>
+            <td>Allow new users to register</td>
+            <td>/users</td>
+            <td>POST</td>
+            <td>A JSON object holding data about the user like so:
+                <p class="example">
+                    {
+                      Username: 'john smith',
+                      Password: 'new1188',
+                      Email: 'johnsmith1133@mail.com',
+                      Birthday: '1983/10/04',
+                      FavoriteMovies:[ ]
+                    }
+                </p>
+            </td>
+            <td> A JSON object holding data about the user, with an automatically assigned id:
+                <p class="example">
+                    {
+                      id: '12283080d8038d08d0d',
+                      Username: 'john smith',
+                      Password: 'new1188',
+                      Email: 'johnsmith1133@mail.com',
+                      Birthday: '1983/10/04',
+                      FavoriteMovies:[ ]
+                    }
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>Allow users to update their user info</td>
+            <td>/users/:Username</td>
+            <td>POST</td>
+            <td>JSON object holding existing user information like so (ID cannot be changed and users are not required to change any specific field):
+               <p class="example">
+                 {
+                  id: '12283080d8038d08d0d',
+                  Username: 'john smith',
+                  Password: 'new1188',
+                  Email: 'johnsmith1133@mail.com',
+                  Birthday: '1983/10/04',
+                  FavoriteMovies:[ ]
+                }
+                </p>
+            </td>
+            <td> JSON obejct confirming the number of user objects modified and how many fields were changed(if the two fields equal 0 that means the username was not recognized):
+                <p class="example">
+                    {
+                    usersChanged: 1,
+                    fieldsChanged: 1
+                    }
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>Allow users to add a movie to their list of favorites</td>
+            <td>/users/:Username/Movies/:MovieID</td>
+            <td>POST</td>
+            <td>None</td>
+            <td>JSON object holding data about the user with the updated version of their movie list:
+                <p class="example">
+                    {
+                      id: '12283080d8038d08d0d',
+                      Username: 'john smith',
+                      Password: 'new1188',
+                      Email: 'johnsmith1133@mail.com',
+                      Birthday: '1983/10/04',
+                      FavoriteMovies:['389y9d8d9']
+                    }
+                </p>   
+            </td>
+        </tr>
+        <tr>
+            <td>Allow users to remove a movie from their list of favorites</td>
+            <td>/users/:Username/Movies/:MovieID</td>
+            <td>DELETE</td>
+            <td>None</td>
+            <td>JSON object with data about the user, showing the list of favorite movies without the deleted movie/movies</td>
+                <p class="example">
+                {
+                    id: '12283080d8038d08d0d',
+                    Username: 'john smith',
+                    Password: 'new1188',
+                    Email: 'johnsmith1133@mail.com',
+                    Birthday: '1983/10/04',
+                    FavoriteMovies:['389y9d8d9']
+                }
+                </p>   
+        </tr>
+        <tr>
+            <td>Allow existing users to deregister</td>
+            <td>/users/:id</td>
+            <td>None</td>
+            <td>Text message confirming that the users account has been deleted:
+                <p class="example">John was successfully deleted</p>
+            </td>
+        </tr>
+    </tbody>
+    </table>
+  </div>
+
+  <script src="/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+$primary-color: #a71d31;
+$primary-color-transparent: rgba(167, 29, 49, 0.7);
+$secondary-color: #fde74c;
+$tertiary-color: #add8e6 ;
+$absent-of-color: #000000;
+
+.profile-view {
+    max-width: 700px;
+    margin: 10px auto;
+    background-color: $tertiary-color;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    color: $absent-of-color;
+  }
+  
+  .profile-view .btn {
+    width: 100px;
+  }
+  
+  .changeDataForm {
+    margin-top: 30px;
+    display: none;
+    border-top: 1px solid $tertiary-color;
+  }
+  
+  .show-form {
+    display: inherit;
+    position: relative;
+    animation: formSlideDown .3s ease-in;
+  }
+  
+  .favorite-movies {
+    display: flex;
+    justify-content: flex-start;
+    overflow:scroll;
+  }
+  
+  .movie-image {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+  }
+  
+  .movie-image img {
+    width: 150px;
+  }
+  
+  #toggleButton {
+    width: 160px;
+  }
+  
+  @keyframes formSlideDown {
+    from {
+      opacity: 0;
+    }
+  
+    to {
+      opacity: 1;
+    }
+  }
