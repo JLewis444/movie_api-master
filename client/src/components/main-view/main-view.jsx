@@ -41,7 +41,7 @@ export class MainView extends React.Component {
   }
 
   getMovies(token) {
-    axios.get('https://myflix-ade.herokuapp.com/movies', {
+    axios.get('https://lewis-myflix.herokuapp.com/movies', {
       headers: { Authorization: `Bearer ${token}`}
     })
     .then(response => {
@@ -57,7 +57,7 @@ export class MainView extends React.Component {
 
   getUser(token) {
     let username = localStorage.getItem('user');
-    axios.get(`https://myflix-ade.herokuapp.com/users/${username}`, {
+    axios.get(`https://lewis-myflix.herokuapp.com/users/${username}`, {
       headers: { Authorization: `Bearer ${token}`}
     })
     .then(response => {
@@ -69,17 +69,17 @@ export class MainView extends React.Component {
     });
   }
 
-  toggleNavbar() {
-    this.setState({
+   toggleNavbar() {
+     this.setState({
       collapsed: !this.state.collapsed
-    });
-  }
+   });
+ }
 
   onLoggedIn(authData) {
     this.setState({
       user: authData.user.Username
     });
-    this.props.setLoggedInUser(authData.user);
+    // this.props.setLoggedInUser(authData.user);
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.Username);
     this.getMovies(authData.token);
@@ -111,6 +111,9 @@ export class MainView extends React.Component {
 
   render() {
     const { movies, user } = this.state;
+    console.log(movies);
+    console.log(user);
+    if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>
 
     if (!movies) return <div className="main-view"/>;
 
@@ -126,18 +129,21 @@ export class MainView extends React.Component {
                  <NavLink href="/" onClick={() => this.logOut()}>Log out</NavLink>
                 </NavItem>
                 <NavItem>
-                 <NavLink href="/users/:Username">{user}</NavLink>
+                <NavLink href={`/users/${user}`}>{user}</NavLink>
+                  {/* <NavLink href="/users/:username">{user}</NavLink>  */}
                 </NavItem>
               </Nav>
             </Collapse>
             </Navbar>
           </div>
           <div className="main-view">
-            <Route exact path="/" render={() => {
+           {/* <Route exact path="/" render={() => movies.map(m => <MovieCard key={m._id} movie={m}/>)}/> */}
+            
+             <Route exact path="/" render={() => {
               if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
               return movies.map(m => <MovieCard key={m._id} movie={m}/>)
               }
-            }/>
+            }/> 
             <Route path="/register" render={() => <RegistrationView />} />
             <Route path="/movies/:movieId" render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>}/>
             <Route path="/genres/:name" render={({ match }) => {
@@ -148,7 +154,7 @@ export class MainView extends React.Component {
               if (!movies) return <div className="main-view"/>;
               return <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director}/>}
             } />
-            <Route exact path="/users/:Username" render={() => <ProfileView />}/>
+            <Route exact path="/users/:username" render={() => <ProfileView />}/>
             </div>
         </Router>
     );

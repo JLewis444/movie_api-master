@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card';
 
 export class MovieCard extends React.Component {
   render() {
-    const { movie, onClick } = this.props;
+    const { movie, onClick} = this.props;
 
     return (
       <Card style={{ width: '16rem' }}>
@@ -13,7 +13,7 @@ export class MovieCard extends React.Component {
         <Card.Body>
           <Card.Title>{movie.Title}</Card.Title>
           <Card.Text>{movie.Description}</Card.Text>
-          <Button onClick={() => onClick(movie)} variant="link">Details</Button>
+           <Button onClick={() => onClick(movie)} variant="link">Details</Button> 
           </Card.Body>
       </Card>
     );
@@ -24,5 +24,5 @@ MovieCard.propTypes = {
   movie: PropTypes.shape ({
     Title: PropTypes.string
   }).isRequired,
-  onClick: PropTypes.func.isRequired
+// onClick: PropTypes.func.isRequired
 }

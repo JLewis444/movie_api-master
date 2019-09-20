@@ -37,7 +37,7 @@ export class ProfileView extends React.Component {
       //get user
     getUser(token) {
         let username = localStorage.getItem('user');
-        axios.get(`https://lewis.myflix.herokuapp.com/users/${username}`, {
+        axios.get(`https://lewis-myflix.herokuapp.com/users/${username}`, {
         headers: { Authorization: `Bearer ${token}`}
         })
         .then(response => {
@@ -55,10 +55,26 @@ export class ProfileView extends React.Component {
         });
     }
 
-    //handle the changes
-    handleChange(event) {
-        this.setState( {[event.target.name]: event.target.value} )
-    }
+    //delete user
+  deleteUser(event) {
+    event.preventDefault();
+    axios.delete(`https://lewis-myflix.herokuapp.com/users/${localStorage.getItem('user')}`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}`}
+    })
+    .then(response => {
+      alert('Your Account has been deleted!');
+      //clears storage
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      //opens login view
+      window.open('/', '_self');
+    })
+    .catch(event => {
+      alert('failed to delete user');
+    });
+  }
+
+  
 
     //update user data
     handleSubmit(event) {
@@ -103,6 +119,12 @@ export class ProfileView extends React.Component {
         alert('Oops... something went wrong...');
         });
     }
+
+    //handle the changes
+  handleChange(event) {
+    this.setState( {[event.target.name]: event.target.value} )
+  }
+
 
       //toggle CHangeData form
     toggleForm() {

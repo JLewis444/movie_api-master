@@ -22,6 +22,10 @@ export function LoginView(props) {
       props.onLoggedIn(data);
     })
     .catch(event => {
+      if (event.response){
+        console.log(event.response.data);
+      }
+      console.log(event);
       alert('no such user: ' + username);
     });
   };
@@ -38,9 +42,9 @@ export function LoginView(props) {
         <Input type="password" value={password} onChange={e => setPassword(e.target.value)} />
       </FormGroup>
       <Button className="btn-lg btn-dark btn-block" type="button" onClick={handleSubmit}>Submit</Button><br></br>
-      <Link to={'/register'}>
+      {/* <Link to={'/register'}>
             <Button variant="link" className="btn-lg btn-light btn-block">Register</Button>
-      </Link>
+      </Link> */}
     </Form>
   );
 }
