@@ -123,7 +123,7 @@ app.get('/directors/:name', passport.authenticate('jwt', { session: false }), (r
 
 //display users details
 
-app.get('/users/:Username', (req, res) => {
+app.get('/users/:username', (req, res) => {
   console.log(req.params.username);
   Users.findOne({ 'Username': req.params.username })
   .then(user => {
