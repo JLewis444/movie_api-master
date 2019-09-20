@@ -121,6 +121,18 @@ app.get('/directors/:name', passport.authenticate('jwt', { session: false }), (r
     .catch(err => res.status(500).send(`Error: ${err}`)); // Simple error handling
 });
 
+//display users details
+
+app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
+  console.log(req.params.username);
+  Users.findOne({ 'Username': req.params.username })
+  .then(user => {
+    if  (!user) return res.status(404).send( `${req.params.username} not found`);
+    res.status(201).json(user);
+  }) 
+  .catch(err => res.status(500).send(`Error: ${err}`));
+});
+
 // Add New User
 app.post('/users', [
   // Data validation

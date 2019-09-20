@@ -6,7 +6,7 @@ import Card from 'react-bootstrap/Card';
 export class MovieCard extends React.Component {
   render() {
     const { movie, onClick} = this.props;
-
+    console.log(this.props);
     return (
       <Card style={{ width: '16rem' }}>
         <Card.Img variant="top" src={movie.ImagePath} />
@@ -24,5 +24,5 @@ MovieCard.propTypes = {
   movie: PropTypes.shape ({
     Title: PropTypes.string
   }).isRequired,
-// onClick: PropTypes.func.isRequired
+ onClick: PropTypes.func.isRequired
 }

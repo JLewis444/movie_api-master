@@ -51787,6 +51787,7 @@ function (_React$Component) {
       var _this$props = this.props,
           movie = _this$props.movie,
           _onClick = _this$props.onClick;
+      console.log(this.props);
       return _react.default.createElement(_Card.default, {
         style: {
           width: '16rem'
@@ -51810,8 +51811,8 @@ exports.MovieCard = MovieCard;
 MovieCard.propTypes = {
   movie: _propTypes.default.shape({
     Title: _propTypes.default.string
-  }).isRequired // onClick: PropTypes.func.isRequired
-
+  }).isRequired,
+  onClick: _propTypes.default.func.isRequired
 };
 },{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/Button.js","react-bootstrap/Card":"../node_modules/react-bootstrap/Card.js"}],"components/movie-view/movie-view.jsx":[function(require,module,exports) {
 "use strict";
@@ -52646,7 +52647,7 @@ function (_React$Component) {
           return _react.default.createElement(_registrationView.RegistrationView, null);
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
-        path: "/movies/:movieId",
+        path: "/Movies/:MovieId",
         render: function render(_ref) {
           var match = _ref.match;
           return _react.default.createElement(_movieView.MovieView, {
@@ -52785,7 +52786,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49659" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57320" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
