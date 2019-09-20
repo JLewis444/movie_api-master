@@ -45,7 +45,7 @@ export class ProfileView extends React.Component {
             userData: response.data,
             username: response.data.Username,
             password: response.data.Password,
-            email: response.data.EMail,
+            email: response.data.Email,
             birthday: response.data.Birthday,
             favoriteMovies: response.data.FavoriteMovies
         });

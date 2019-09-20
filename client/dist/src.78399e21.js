@@ -52176,7 +52176,7 @@ function (_React$Component) {
           userData: response.data,
           username: response.data.Username,
           password: response.data.Password,
-          email: response.data.EMail,
+          email: response.data.Email,
           birthday: response.data.Birthday,
           favoriteMovies: response.data.FavoriteMovies
         });
@@ -52786,7 +52786,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57320" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54491" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
