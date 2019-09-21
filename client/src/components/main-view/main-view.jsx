@@ -1,8 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 
+import { connect } from 'react-redux';
+
 import { BrowserRouter as Router, Route} from "react-router-dom";
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+
+import { setMovies } from '../../actions/actions';
 
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
@@ -46,9 +50,7 @@ export class MainView extends React.Component {
     })
     .then(response => {
       // Assign the result to the state
-      this.setState({
-        movies: response.data
-      });
+      this.props.setMovies(response.data);
     })
     .catch(function (error) {
       console.log(error);
@@ -110,7 +112,8 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { movies, user } = this.state;
+    let { movies } = this.props;
+    let { user } = this.state;
     console.log(movies);
     console.log(user);
     if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>
@@ -139,7 +142,7 @@ export class MainView extends React.Component {
           <div className="main-view">
            {/* <Route exact path="/" render={() => movies.map(m => <MovieCard key={m._id} movie={m}/>)}/> */}
             
-             <Route exact path="/" render={() => {
+             <Route exact path="/client" render={() => {
               if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
               return movies.map(m => <MovieCard key={m._id} movie={m}/>)
               }
@@ -160,3 +163,9 @@ export class MainView extends React.Component {
     );
   }
 } 
+
+let mapStateToProps = state => {
+  return { movies: state.movies }
+}
+
+export default connect(mapStateToProps, { setMovies } )(MainView);

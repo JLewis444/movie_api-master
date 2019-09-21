@@ -28,6 +28,7 @@ const app = express();
 // App Middleware
 
 app.use(express.static(`${__dirname}/public`)); // Route all requests for static files to public folder
+app.use('/client', express.static(path.join(__dirname, 'dist')));
 
 app.use(morgan('common')); // Use Morgan Middlware for logging requests
 
@@ -46,6 +47,10 @@ app.use((err, req, res, next) => {
   // eslint-disable-next-line no-console
   console.error(err.stack);
   res.status(500).send('Something Broke');
+});
+
+app.get("/client/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
 // GET requests
