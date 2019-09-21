@@ -1,8 +1,11 @@
 {
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.0-7",
+    "@fortawesome/free-solid-svg-icons": "^5.11.1",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "axios": "^0.19.0",
     "prop-types": "^15.7.2",
-    "react": "^16.3.0",
+    "react": "16.x",
     "react-bootstrap": "^1.0.0-beta.12",
     "react-dom": "^16.3.0",
     "react-redux": "^7.1.1",

@@ -74,8 +74,7 @@ export class ProfileView extends React.Component {
     });
   }
 
-  
-
+   
     //update user data
     handleSubmit(event) {
         event.preventDefault();
