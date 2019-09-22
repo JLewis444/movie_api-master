@@ -3,14 +3,15 @@ import axios from 'axios';
 
 import { connect } from 'react-redux';
 
+import { Link } from 'react-router-dom';
+
 import { BrowserRouter as Router, Route} from "react-router-dom";
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 
-import { setMovies } from '../../actions/actions';
+import { setMovies, setLoggedInUser } from '../../actions/actions';
 
+import MoviesList from '../movies-list/movies-list';
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
-import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { GenreView } from '../genre-view/genre-view';
 import { DirectorView } from '../director-view/director-view';
@@ -81,7 +82,7 @@ export class MainView extends React.Component {
     this.setState({
       user: authData.user.Username
     });
-    // this.props.setLoggedInUser(authData.user);
+    this.props.setLoggedInUser(authData.user);
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.Username);
     this.getMovies(authData.token);
@@ -108,12 +109,13 @@ export class MainView extends React.Component {
     //resets user state to render again
     this.setState({
       user: null
-    })
+    });
+    window.open('/', '_self');
   }
 
   render() {
-    let { movies } = this.props;
-    let { user } = this.state;
+    
+    let { movies, user } = this.state;
     console.log(movies);
     console.log(user);
     if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>
@@ -122,50 +124,40 @@ export class MainView extends React.Component {
 
     return (
       <Router>
-          <div>
-            <Navbar color="info" light>
-            <NavbarBrand href="#" className="menu">myFlix</NavbarBrand>
-            <NavbarToggler onClick={this.toggleNavbar} className="menu-2" />
-            <Collapse isOpen={!this.state.collapsed} navbar>
-              <Nav navbar>
-                <NavItem>
-                 <NavLink href="/" onClick={() => this.logOut()}>Log out</NavLink>
-                </NavItem>
-                <NavItem>
-                <NavLink href={`/users/${user}`}>{user}</NavLink>
-                  {/* <NavLink href="/users/:username">{user}</NavLink>  */}
-                </NavItem>
-              </Nav>
-            </Collapse>
-            </Navbar>
+      <header>
+        <h1 className="appName">myFlix</h1>
+      </header>
+      <div className="main-view">
+        {user &&
+          <div className="navbar">
+            <Link to={'/profile'}>
+              <button>My Profile</button>
+            </Link>
+            <button onClick={() => this.logOut()}>Logout</button>
           </div>
-          <div className="main-view">
-           {/* <Route exact path="/" render={() => movies.map(m => <MovieCard key={m._id} movie={m}/>)}/> */}
-            
-             <Route exact path="/client" render={() => {
-              if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-              return movies.map(m => <MovieCard key={m._id} movie={m}/>)
-              }
-            }/> 
-            <Route path="/register" render={() => <RegistrationView />} />
-            <Route path="/Movies/:MovieId" render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>}/>
-            <Route path="/genres/:name" render={({ match }) => {
-              if (!movies) return <div className="main-view"/>;
-              return <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre}/>}
-            } />
-            <Route path="/directors/:name" render={({ match }) => {
-              if (!movies) return <div className="main-view"/>;
-              return <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director}/>}
-            } />
-            <Route exact path="/users/:username" render={() => <ProfileView />}/>
-            </div>
-        </Router>
+        }
+
+        <Route exact path="/" render={() => {
+          if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+          return <MoviesList />;
+          }}
+        />
+
+        <Route exact path="/movies/:id" render={({ match }) => <MovieView movieId={match.params.id}/>}/>
+
+        <Route exact path="/genres/:name" render={({ match }) => <GenreView genreName={match.params.name}/>}/>
+
+        <Route exact path="/directors/:name" render={({ match }) => <DirectorView directorName={match.params.name}/>}/>
+
+        <Route exact path="/register" render={() => <RegistrationView onSignedIn={user => this.onSignedIn(user)} />} />
+
+        <Route exact path="/profile" render={() => <ProfileView />}/>
+      </div>
+    </Router>
     );
   }
 } 
 
-let mapStateToProps = state => {
-  return { movies: state.movies }
-}
 
-export default connect(mapStateToProps, { setMovies } )(MainView);
+
+export default connect(null, { setMovies, setLoggedInUser } )(MainView);
