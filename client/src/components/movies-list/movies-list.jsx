@@ -1,56 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-
 import VisibilityFilterInput from '../visibility-filter-input/visibility-filter-input';
 import { MovieCard } from '../movie-card/movie-card';
 
 const mapStateToProps = state => {
-    const { movies, visibilityFilter, sortCoulmn } = state;
-    
-    let moviesToshow = movies.concat().sort((a, b) => {
-        if (a[sortCoulmn] < b[sortCoulmn]) return -1;
-        if (a[sortCoulmn] > b[sortCoulmn]) return 1;
-        return 0
-    });
-
-    if (visibilityFilter !== '' && sortCoulmn === 'Title') {
-        moviesToshow = moviesToshow.filter(movie => movie.Title.toLowerCase().includes(visibilityFilter.toLowerCase()));
-    }
-
-    if (visibilityFilter !== '' && sortCoulmn === 'Genre') {
-        moviesToshow = moviesToshow.filter(movie.Genre.Name.toLowerCase().includes(visibilityFilter.toLowerCase()));
-    }
-
-    if (visibilityFilter !== '' && sortCoulmn === 'Director') {
-        moviesToshow = moviesToshow.filter(movie.Director.Name.toLowerCase().includes(visibilityFilter.toLowerCase()));
-    }
-
-    return { movies: moviesToshow };
+    const { visibilityFilter } = state;
+    return { visibilityFilter };
 };
 
 function MoviesList(props) {
-    const { movies } = props;
-    
+    const { movies, visibilityFilter } = props;
+    let filteredMovies = movies;
+
+    if (visibilityFilter !== '') {
+        filteredMovies = movies.filter(m => m.Title.includes(visibilityFilter));
+    }
 
     if (!movies) return <div className="main-view"/>;
 
-    return <div className="movie-list">
-    <VisibilityFilterInput />
-    <Container>
-      <Row>
-      {movies.map(movie => (
-        <Col key={movie._id} xs={6} sm={6} md={4}>
-          <MovieCard key={movie._id} movie={movie} />
-        </Col>
-      ))
-      }
-      </Row>
-    </Container>
-  </div>;
+    return <div className="movies-list">
+        <VisibilityFilterInput visibilityFilter={visibilityFilter} />
+        {filteredMovies.map(m => <MovieCard key={m._id} movie={m}/>)}
+    </div>;
 }
 
 export default connect(mapStateToProps)(MoviesList);

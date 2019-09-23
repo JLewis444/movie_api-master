@@ -1,17 +1,16 @@
 import React from "react";
 import axios from 'axios';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import {Button, Form }from 'react-bootstrap';
 
 import { Link } from "react-router-dom";
 
 import './profile-view.scss';
 
-export class ProfileView extends React.Component {
+class ProfileView extends React.Component {
 
     constructor() {
         super();
-    
+
         this.state = {
           username: null,
           password: null,
@@ -74,7 +73,7 @@ export class ProfileView extends React.Component {
     });
   }
 
-   
+
     //update user data
     handleSubmit(event) {
         event.preventDefault();
@@ -155,7 +154,7 @@ export class ProfileView extends React.Component {
                 </div>
                 <div className="birthday">
                 <div className="label">Birthday</div>
-                <div className="value">{birthday.substr(-24, 10)}</div>
+                {/*<div className="value">{birthday.substr(-24, 10)}</div> */}
                 </div>
                 <div className="email">
                 <div className="label">EMail</div>
@@ -218,3 +217,5 @@ export class ProfileView extends React.Component {
         );
     }
 }
+
+export default ProfileView

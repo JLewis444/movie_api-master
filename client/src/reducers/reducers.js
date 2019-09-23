@@ -1,7 +1,11 @@
 import { combineReducers } from 'redux';
 
-import { SET_FILTER, SET_MOVIES, SET_SORT_COLUMN, SET_LOGGEDIN_USER } from '../actions/actions';
+import { SET_FILTER, SET_MOVIES,SET_LOGGED_IN_USER  } from '../actions/actions';
 
+let initialState = {
+  movies : [],
+  user: null
+}
 function visibilityFilter(state = '', action) {
     switch (action.type) {
         case SET_FILTER:
@@ -14,25 +18,16 @@ function visibilityFilter(state = '', action) {
 function movies(state = [], action) {
     switch (action.type) {
         case SET_MOVIES:
-            return action.value;
+            return action.value
             default:
                 return state;
     }
 }
 
-function sortColumn(state = 'Title', action) {
+function user(state = null, action) {
     switch (action.type) {
-        case SET_SORT_COLUMN:
-            return action.value;
-            default:
-                return state;
-    }
-}
-
-function loggedInUser(state = [], action) {
-    switch (action.type) {
-        case SET_LOGGEDIN_USER:
-            return action.value;
+        case SET_LOGGED_IN_USER :
+            return action.value
             default:
                 return state;
     }
@@ -40,9 +35,8 @@ function loggedInUser(state = [], action) {
 
 const moviesApp = combineReducers({
     visibilityFilter,
-    sortColumn,
     movies,
-    loggedInUser
+    user
 });
 
 
