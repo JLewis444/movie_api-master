@@ -17,7 +17,7 @@ export class MovieCard extends React.Component {
          <Card.Body>
            <Card.Title>{movie.Title}</Card.Title>
            <Card.Text>{movie.Description}</Card.Text>
-            <a href={`movies/${movie._id}`} className="btn btn-primary">Details</a>
+            <a href={`client/movies/${movie._id}`} className="btn btn-primary">Details</a>
             <Button variant="danger" onClick={() => addToFavourites(movie._id)}>
              <FontAwesomeIcon icon={faHeart} />
            </Button>
