@@ -131,7 +131,7 @@ class MainView extends React.Component {
             <Collapse isOpen={!this.state.collapsed} navbar>
               <Nav navbar>
                 <NavItem>
-                 <NavLink href="/" onClick={() => this.logOut()}>Log out</NavLink>
+                 <NavLink href="/client" onClick={() => this.logOut()}>Log out</NavLink>
                 </NavItem>
                 <NavItem>
                 <NavLink href={`client/users/${user}`}>{user}</NavLink>
@@ -149,19 +149,19 @@ class MainView extends React.Component {
               return <Row>{movies.map(m => <MovieCard key={m._id} movie={m}/>)}</Row>
               }
             }/>
-            <Route path="client/register" render={() => <RegistrationView />} />
+            <Route path="/register" render={() => <RegistrationView />} />
 
-          <Route path="client/Movies/:movieId" render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>}/>
+          <Route path="/Movies/:movieId" render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>}/>
 
-          <Route path="client/genres/:name" render={({ match }) => {
+          <Route path="/genres/:name" render={({ match }) => {
               if (!movies) return <div className="main-view"/>;
               return <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre}/>}
             } />
-            <Route path="client/directors/:name" render={({ match }) => {
+            <Route path="/directors/:name" render={({ match }) => {
               if (!movies) return <div className="main-view"/>;
               return <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director}/>}
             } />
-            <Route exact path="client/users/:username" render={() => <ProfileView />}/>
+            <Route exact path="/users/:username" render={() => <ProfileView />}/>
             </div>
         </Router>
     );
