@@ -163,9 +163,7 @@ class ProfileView extends React.Component {
 
                 <div className="favoriteMovies">
                 <div className="label">Favorite Movies</div>
-                {favoriteMovies.length === 0 &&
-                    <div className="value">Your Favorite Movie List is empty :-(</div>
-                }
+                
                 {(favoriteMovies.length > 0)? (<div>
                   {favoriteMovies.map(movie => <li key={movie._id}>{movie.Title}</li> )}</div>) : (<i>Nothing to show</i>)
                 }

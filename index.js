@@ -28,7 +28,7 @@ const app = express();
 // App Middleware
 
 app.use(express.static(`${__dirname}/public`)); // Route all requests for static files to public folder
-app.use("/client",express.static('client'));
+app.use("/client",express.static('dist'));
 
 app.use(morgan('common')); // Use Morgan Middlware for logging requests
 
@@ -52,7 +52,7 @@ app.use((err, req, res, next) => {
 
 app.get("/client/*", (req, res) => {
   console.log("client spot")
-  res.sendFile(path.join(__dirname + "/client/dist/", "index.html"));
+  res.sendFile(path.join(__dirname + "dist/", "index.html"));
 });
 
 // GET requests
@@ -133,7 +133,7 @@ app.get('/directors/:name', passport.authenticate('jwt', { session: false }), (r
 app.get('/users/:username', (req, res) => {
   console.log(req.params.username);
   Users.findOne({ 'Username': req.params.username })
-  .populate('favouriteMovies')
+  .populate('FavoriteMovies')
   .then(user => {
     if  (!user) return res.status(404).send( `${req.params.username} not found`);
     res.status(201).json(user);
