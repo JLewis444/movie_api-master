@@ -133,6 +133,7 @@ app.get('/directors/:name', passport.authenticate('jwt', { session: false }), (r
 app.get('/users/:username', (req, res) => {
   console.log(req.params.username);
   Users.findOne({ 'Username': req.params.username })
+  .populate('favouriteMovies')
   .then(user => {
     if  (!user) return res.status(404).send( `${req.params.username} not found`);
     res.status(201).json(user);
