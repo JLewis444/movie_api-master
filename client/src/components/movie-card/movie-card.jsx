@@ -9,7 +9,7 @@ import { faHeart, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
 export class MovieCard extends React.Component {
   render() {
-    const { movie} = this.props;
+    const { movie, onClick} = this.props;
     // console.log(this.props);
     return (
        <Card style={{ width: '16rem' }} className="mb-3 mr-2">
@@ -17,7 +17,7 @@ export class MovieCard extends React.Component {
          <Card.Body>
            <Card.Title>{movie.Title}</Card.Title>
            <Card.Text>{movie.Description}</Card.Text>
-            <a href={`client/movies/${movie._id}`} className="btn btn-primary">Details</a>
+            <Button onClick={() => onClick(movie)} variant="link"></Button>
             <Button variant="danger" onClick={() => addToFavourites(movie._id)}>
              <FontAwesomeIcon icon={faHeart} />
            </Button>
@@ -39,5 +39,5 @@ MovieCard.propTypes = {
   movie: PropTypes.shape ({
     Title: PropTypes.string
   }).isRequired,
- // onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired
 }

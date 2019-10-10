@@ -1,12 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 
-import { connect } from 'react-redux';
 
 import { BrowserRouter as Router, Route} from "react-router-dom";
-import { Row,Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 
-import { setMovies, setLoggedInUser } from '../../actions/actions';
 
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
@@ -64,7 +62,7 @@ class MainView extends React.Component {
     })
     .then(response => {
       // Assign the result to the state
-        this.props.setUser(response.data)
+        this.props.setLoggedInUser(response.data)
 
     })
     .catch(function (error) {
@@ -82,7 +80,7 @@ class MainView extends React.Component {
     this.setState({
       user: authData.user.Username
     });
-    // this.props.setLoggedInUser(authData.user);
+     this.props.setLoggedInUser(authData.user);
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.Username);
     this.getMovies(authData.token);
@@ -113,12 +111,11 @@ class MainView extends React.Component {
   }
 
   render() {
-    let { movies } = this.props;
-    let { user } = this.state;
+  
+    let { movies,user } = this.state;
     // console.log(movies);
     // console.log(user);
 
-    if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>
 
     if (!movies) return <div className="main-view"/>;
 
@@ -146,7 +143,7 @@ class MainView extends React.Component {
 
              <Route exact path="/" render={() => {
               if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-              return <Row>{movies.map(m => <MovieCard key={m._id} movie={m}/>)}</Row>
+              return movies.map(m => <MovieCard key={m._id} movie={m}/>)
               }
             }/>
             <Route path="/register" render={() => <RegistrationView />} />
@@ -168,18 +165,4 @@ class MainView extends React.Component {
   }
 }
 
-let mapStateToProps = state => {
-  return {
-      movies: state.movies,
-      user: state.user
-    }
-}
 
-let mapDispatchToProps = (dispatch) => {
-  return {
-    setMovies: (movies) => dispatch(setMovies(movies)),
-    setUser: (user) => dispatch(setLoggedInUser(user))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps )(MainView);
