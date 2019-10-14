@@ -7,7 +7,11 @@ export class MovieView extends React.Component {
     super();
     this.state = {};
   }
+  handleClick = () => {
+    console.log(this.props);
+  }
   render() {
+   
     const { movie, onClick } = this.props;
     if (!movie) return null;
     return (
@@ -29,23 +33,23 @@ export class MovieView extends React.Component {
           <div className="label">Director:</div>
           <div className="value">{movie.Director.Name}</div>
           </div>
-       <button onClick={() => onClick()}className="return-button">To movie list</button>
+       <button onClick={() => this.handleClick()}className="return-button">To Movie</button>
        </div>
     );
   }
 }
 
 MovieView.propTypes = {
-    // movie: PropTypes.shape({
-    //   Title: PropTypes.string,
-    //   Description: PropTypes.string,
-    //   ImagePath: PropTypes.string,
-    //   Genre: PropTypes.shape({
-    //     Name: PropTypes.string
-    //   }),
-    //   Director: PropTypes.shape({
-    //     Name: PropTypes.string
-    //   })
-    // }).isRequired,
-    // onClick: PropTypes.func.isRequired
+     movie: PropTypes.shape({
+      Title: PropTypes.string,
+       Description: PropTypes.string,
+       ImagePath: PropTypes.string,
+      Genre: PropTypes.shape({
+         Name: PropTypes.string
+       }),
+       Director: PropTypes.shape({
+       Name: PropTypes.string
+      })
+     }).isRequired,
+     onClick: PropTypes.func
 };

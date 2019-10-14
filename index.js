@@ -52,7 +52,7 @@ app.use((err, req, res, next) => {
 
 app.get("/client/*", (req, res) => {
   console.log("client spot")
-  res.sendFile(path.join(__dirname + "dist/", "index.html"));
+  res.sendFile(path.join(__dirname + "/dist/", "index.html"));
 });
 
 // GET requests
